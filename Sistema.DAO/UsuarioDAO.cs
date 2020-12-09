@@ -12,6 +12,45 @@ namespace Sistema.DAO
 {
     public class UsuarioDAO
     {
+        public List<UsuarioEnt> Buscar(UsuarioEnt objTabela)
+        {
+            using (SqlConnection con = new SqlConnection())
+            {
+                con.ConnectionString = Properties.Settings.Default.banco;
+                SqlCommand comando = new SqlCommand();
+                comando.CommandType = CommandType.Text;
+
+                con.Open();
+
+                comando.CommandText = "SELECT * FROM usuarios WHERE nome LIKE @nome";
+
+                comando.Parameters.Add("nome", SqlDbType.VarChar).Value = objTabela.Nome + "%";
+
+                comando.Connection = con;
+
+                SqlDataReader dr;
+                List<UsuarioEnt> lista = new List<UsuarioEnt>();
+
+                dr = comando.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        UsuarioEnt dado = new UsuarioEnt();
+
+                        dado.Id = Convert.ToInt32(dr["id"]);
+                        dado.Nome = Convert.ToString(dr["nome"]);
+                        dado.Usuario = Convert.ToString(dr["usuario"]);
+                        dado.Senha = Convert.ToString(dr["senha"]);
+
+                        lista.Add(dado);
+                    }
+                }
+                return lista;
+            }
+        }
+
         public int Inserir(UsuarioEnt objTabela)
         {
             using(SqlConnection con = new SqlConnection())

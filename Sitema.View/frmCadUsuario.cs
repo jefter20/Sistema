@@ -27,6 +27,22 @@ namespace Sitema.View
         {
             switch (opcoes)
             {
+                case "Buscar":
+                    try
+                    {
+                        objTabela.Nome = txtBuscar.Text;
+
+                        List<UsuarioEnt> lista = new List<UsuarioEnt>();
+                        lista = new UsuarioModel().Buscar(objTabela);
+                        Grid.AutoGenerateColumns = false;
+                        Grid.DataSource = lista;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erro ao buscar Dados" + ex.Message);
+                    }
+                    break;
+
                 case "Novo":
                     HabilitarCampos();
                     LimparCampos();
@@ -150,6 +166,19 @@ namespace Sitema.View
             btnSalvar.Enabled = false;
             btnEditar.Enabled = false;
             btnExcluir.Enabled = false;
+            btnBuscar.Enabled = true;
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+            if (txtBuscar.Text == "")
+            {
+                MessageBox.Show("Insira sua pesquisa no campo ao lado!");
+            }
+
+            opcoes = "Buscar";
+            iniciarOpcoes();
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -221,6 +250,17 @@ namespace Sitema.View
             btnSalvar.Enabled = false;
             btnEditar.Enabled = true;
             btnExcluir.Enabled = true;
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if (txtBuscar.Text == "")
+            {
+                ListarGrid();
+            }
+
+            opcoes = "Buscar";
+            iniciarOpcoes();
         }
     }
 }

@@ -10,6 +10,11 @@ namespace Sistema.Model
 {
     public class UsuarioModel
     {
+        public List<UsuarioEnt> Buscar(UsuarioEnt objTabela)
+        {
+            return new UsuarioDAO().Buscar(objTabela);
+        }
+
         public static int Inserir(UsuarioEnt objTabela)
         {
             return new UsuarioDAO().Inserir(objTabela);
