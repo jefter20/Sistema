@@ -156,6 +156,7 @@ namespace Sitema.View
         {
             opcoes = "Novo";
             iniciarOpcoes();
+            btnNovo.Enabled = false;
             btnSalvar.Enabled = true;
             btnEditar.Enabled = false;
             btnExcluir.Enabled = false;
@@ -173,7 +174,6 @@ namespace Sitema.View
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            opcoes = "Excluir";
             iniciarOpcoes();
             btnNovo.Enabled = true;
             btnSalvar.Enabled = false;
