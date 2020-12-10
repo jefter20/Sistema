@@ -72,7 +72,8 @@ namespace Sitema.View
         {
             frmCadUsuario form = new frmCadUsuario();
             this.Hide();
-            form.Show();            
+            form.Show();
+            form.ListarGrid();
         }
     }
 }

@@ -12,10 +12,10 @@ using System.Windows.Forms;
 
 namespace Sitema.View
 {
-    public partial class frmCadUsuario : Form
+    public partial class frmCadProduto : Form
     {
-        UsuarioEnt objTabela = new UsuarioEnt();
-        public frmCadUsuario()
+        ProdutoEnt objTabela = new ProdutoEnt();
+        public frmCadProduto()
         {
             InitializeComponent();
         }
@@ -32,8 +32,8 @@ namespace Sitema.View
                     {
                         objTabela.Nome = txtBuscar.Text;
 
-                        List<UsuarioEnt> lista = new List<UsuarioEnt>();
-                        lista = new UsuarioModel().Buscar(objTabela);
+                        List<ProdutoEnt> lista = new List<ProdutoEnt>();
+                        lista = new ProdutoModel().Buscar(objTabela);
                         Grid.AutoGenerateColumns = false;
                         Grid.DataSource = lista;
                     }
@@ -51,7 +51,7 @@ namespace Sitema.View
                 case "Salvar":
                     try
                     {
-                        if (txtNome.Text == "" | txtUsuario.Text == "" | txtSenha.Text == "")
+                        if (txtNome.Text == "" | txtDescricao.Text == "" | txtValor.Text == "")
                         {
                             MessageBox.Show("Preencha todos os campos!");
                             txtNome.Focus();
@@ -59,47 +59,47 @@ namespace Sitema.View
                         }
 
                         objTabela.Nome = txtNome.Text;
-                        objTabela.Usuario = txtUsuario.Text;
-                        objTabela.Senha = txtSenha.Text;
+                        objTabela.Descricao = txtDescricao.Text;
+                        objTabela.Valor = Convert.ToDecimal(txtValor.Text);
 
-                        int x = UsuarioModel.Inserir(objTabela);
-                                                
+                        int x = ProdutoModel.Inserir(objTabela);
+
                         if (x > 0)
                         {
-                            MessageBox.Show(string.Format("Usuario {0} inserido com sucesso!", txtNome.Text));
+                            MessageBox.Show(string.Format("Produto {0} inserido com sucesso!", txtNome.Text));
                             LimparCampos();
                             DesabilitarCampos();
                             ListarGrid();
                         }
                         else
                         {
-                            MessageBox.Show("Não inserido");    
+                            MessageBox.Show("Não inserido");
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Ocorreu um erro ao salvar " + ex.Message);
-                        
+
                     }
                     break;
 
                 case "Excluir":
                     try
-                    { 
+                    {
                         objTabela.Id = Convert.ToInt32(CodigoId);
 
-                        int x = UsuarioModel.Excluir(objTabela);
+                        int x = ProdutoModel.Excluir(objTabela);
 
                         if (x > 0)
                         {
-                            MessageBox.Show(string.Format("Usuario {0} excluido com sucesso!", txtNome.Text));
+                            MessageBox.Show(string.Format("Produto {0} excluido com sucesso!", txtNome.Text));
                             LimparCampos();
                             DesabilitarCampos();
                             ListarGrid();
                         }
                         else
                         {
-                            MessageBox.Show("Usuário não Excluido!");
+                            MessageBox.Show("Produto não Excluido!");
                         }
                     }
                     catch (Exception ex)
@@ -114,21 +114,21 @@ namespace Sitema.View
                     {
                         objTabela.Id = Convert.ToInt32(CodigoId);
                         objTabela.Nome = txtNome.Text.ToString();
-                        objTabela.Usuario = txtUsuario.Text.ToString();
-                        objTabela.Senha = txtSenha.Text.ToString();
-                                                
-                        int x = UsuarioModel.Editar(objTabela);
+                        objTabela.Descricao = txtDescricao.Text.ToString();
+                        objTabela.Valor = Convert.ToDecimal(txtValor.Text);
+
+                        int x = ProdutoModel.Editar(objTabela);
 
                         if (x > 0)
                         {
-                            MessageBox.Show(string.Format("Usuario {0} alterado com sucesso!", txtNome.Text));
+                            MessageBox.Show(string.Format("Produto {0} alterado com sucesso!", txtNome.Text));
                             LimparCampos();
                             DesabilitarCampos();
                             ListarGrid();
                         }
                         else
                         {
-                            MessageBox.Show("Usuário não alterado!");
+                            MessageBox.Show("Produto não alterado!");
                         }
                     }
                     catch (Exception ex)
@@ -139,89 +139,34 @@ namespace Sitema.View
                     break;
             }
         }
+
         private void HabilitarCampos()
         {
             txtNome.Enabled = true;
-            txtUsuario.Enabled = true;
-            txtSenha.Enabled = true;
+            txtDescricao.Enabled = true;
+            txtValor.Enabled = true;
         }
 
         private void DesabilitarCampos()
         {
             txtNome.Enabled = false;
-            txtUsuario.Enabled = false;
-            txtSenha.Enabled = false;
+            txtDescricao.Enabled = false;
+            txtValor.Enabled = false;
         }
 
         private void LimparCampos()
         {
             txtNome.Text = "";
-            txtUsuario.Text = "";
-            txtSenha.Text = "";
-        }
-
-        private void frmCadUsuario_Load(object sender, EventArgs e)
-        {
-            btnNovo.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnEditar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnProdutos.Enabled = true;
-        }
-
-        private void btnProdutos_Click(object sender, EventArgs e)
-        {
-            frmCadProduto formProduto = new frmCadProduto();
-            this.Hide();
-            formProduto.Show();
-        }
-
-        private void btnNovo_Click(object sender, EventArgs e)
-        {
-            opcoes = "Novo";
-            iniciarOpcoes();
-            btnNovo.Enabled = false;
-            btnSalvar.Enabled = true;
-            btnEditar.Enabled = false;
-            btnExcluir.Enabled = false;
-        }
-
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            opcoes = "Salvar";
-            iniciarOpcoes();
-            btnNovo.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnEditar.Enabled = false;
-            btnExcluir.Enabled = false;
-        }
-
-        private void btnExcluir_Click(object sender, EventArgs e)
-        {
-            opcoes = "Excluir";
-            iniciarOpcoes();
-            btnNovo.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnEditar.Enabled = false;
-            btnExcluir.Enabled = false;
-        }
-
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            opcoes = "Editar";
-            iniciarOpcoes();
-            btnNovo.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnEditar.Enabled = false;
-            btnExcluir.Enabled = false;
+            txtDescricao.Text = "";
+            txtValor.Text = "";
         }
 
         public void ListarGrid()
         {
             try
             {
-                List<UsuarioEnt> lista = new List<UsuarioEnt>();
-                lista = new UsuarioModel().Lista();
+                List<ProdutoEnt> lista = new List<ProdutoEnt>();
+                lista = new ProdutoModel().Lista();
                 Grid.AutoGenerateColumns = false;
                 Grid.DataSource = lista;
             }
@@ -232,12 +177,22 @@ namespace Sitema.View
             }
         }
 
+        private void frmCadProduto_Load(object sender, EventArgs e)
+        {
+            ListarGrid();
+
+            btnNovo.Enabled = true;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
+        }
+
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             CodigoId = Grid.CurrentRow.Cells[0].Value.ToString();
             txtNome.Text = Grid.CurrentRow.Cells[1].Value.ToString();
-            txtUsuario.Text = Grid.CurrentRow.Cells[2].Value.ToString();
-            txtSenha.Text = Grid.CurrentRow.Cells[3].Value.ToString();
+            txtDescricao.Text = Grid.CurrentRow.Cells[2].Value.ToString();
+            txtValor.Text = Grid.CurrentRow.Cells[3].Value.ToString();
 
             HabilitarCampos();
 
@@ -245,6 +200,46 @@ namespace Sitema.View
             btnSalvar.Enabled = false;
             btnEditar.Enabled = true;
             btnExcluir.Enabled = true;
+        }
+
+        private void btnNovo_Click_1(object sender, EventArgs e)
+        {
+            opcoes = "Novo";
+            iniciarOpcoes();
+            btnNovo.Enabled = false;
+            btnSalvar.Enabled = true;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
+        }
+
+        private void btnSalvar_Click_1(object sender, EventArgs e)
+        {
+            opcoes = "Salvar";
+            iniciarOpcoes();
+            btnNovo.Enabled = true;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
+        }
+
+        private void btnExcluir_Click_1(object sender, EventArgs e)
+        {
+            opcoes = "Excluir";
+            iniciarOpcoes();
+            btnNovo.Enabled = true;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
+        }
+
+        private void btnEditar_Click_1(object sender, EventArgs e)
+        {
+            opcoes = "Editar";
+            iniciarOpcoes();
+            btnNovo.Enabled = true;
+            btnSalvar.Enabled = false;
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
         }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
@@ -258,6 +253,13 @@ namespace Sitema.View
             opcoes = "Buscar";
             iniciarOpcoes();
         }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            frmCadUsuario form = new frmCadUsuario();
+            this.Hide();
+            form.Show();
+            form.ListarGrid();
+        }
     }
 }
-    

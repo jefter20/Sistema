@@ -46,7 +46,7 @@ namespace Sitema.View
             this.senha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnProdutos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -200,22 +200,23 @@ namespace Sitema.View
             this.label4.TabIndex = 11;
             this.label4.Text = "Buscar:";
             // 
-            // btnBuscar
+            // btnProdutos
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(244, 10);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(49, 23);
-            this.btnBuscar.TabIndex = 13;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.btnProdutos.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.btnProdutos.Location = new System.Drawing.Point(339, 12);
+            this.btnProdutos.Name = "btnProdutos";
+            this.btnProdutos.Size = new System.Drawing.Size(86, 23);
+            this.btnProdutos.TabIndex = 13;
+            this.btnProdutos.Text = "Produtos";
+            this.btnProdutos.UseVisualStyleBackColor = false;
+            this.btnProdutos.Click += new System.EventHandler(this.btnProdutos_Click);
             // 
             // frmCadUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(450, 374);
-            this.Controls.Add(this.btnBuscar);
+            this.Controls.Add(this.btnProdutos);
             this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Grid);
@@ -231,7 +232,7 @@ namespace Sitema.View
             this.Controls.Add(this.label1);
             this.Name = "frmCadUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmCadUsuario";
+            this.Text = "Cadastro de Usuarios";
             this.Load += new System.EventHandler(this.frmCadUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
             this.ResumeLayout(false);
@@ -258,6 +259,6 @@ namespace Sitema.View
         private System.Windows.Forms.DataGridViewTextBoxColumn senha;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Button btnProdutos;
     }
 }
